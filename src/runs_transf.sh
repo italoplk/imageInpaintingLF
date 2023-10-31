@@ -1,0 +1,2 @@
+python train.py --model vit --epochs 1000 --train-repeats 31 --test-repeats 50 --batch-size 16 --n-crops 4 --save /scratch/output_ImageInpainting/train_vit --project-name train_vit --lr-scheduler custom_exp
+python train.py --model gvit --epochs 1000 --train-repeats 31 --test-repeats 50 --batch-size 16 --n-crops 4 --save /scratch/output_ImageInpainting/train_gvit --project-name train_gvit --lr-scheduler custom_exp
