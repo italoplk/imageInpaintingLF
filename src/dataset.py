@@ -5,6 +5,8 @@ from torchvision.transforms.functional import to_tensor
 import torchvision.transforms as T
 import numpy as np
 import os
+#idm rearranging to lenslet format
+from einops import rearrange
 
 # Normalizes an image [0-255] -> [-1, 1]
 # AF: this faster implementation requires nparray to be already float
@@ -24,6 +26,9 @@ def denormalize (nparray, bit_depth = 8):
 def read_img(img_path):
     img = Image.open(img_path)
     img = img.convert('L')
+
+    img = rearrange(img, '(s u) (t v) c -> c s t u v', s=13, t=13)[:1, :, :, :, :]
+
 
     x = to_tensor(img)
     if x.ndimension() == 2:
@@ -54,7 +59,8 @@ def get_center_crop(img,crop_height,crop_width):
     return img.crop(area_crop)
 
 class MPAIDataset(Dataset):
-    def __init__(self, path, context_size = 64*13, predictor_size = 32*13, bit_depth=8, transforms = None,
+    # IDM took the 13*13
+    def __init__(self, path, context_size = 64, predictor_size = 32, bit_depth=8, transforms = None,
                   repeats = 1, x_crop = None, y_crop = None, center_crop = False):
         names = [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
         filenames = []
@@ -66,8 +72,8 @@ class MPAIDataset(Dataset):
         self.predictor_size = predictor_size
         self.transforms = transforms
         self.bit_depth = bit_depth
-        self.x_crop =x_crop
-        self.y_crop =y_crop
+        self.x_crop  = x_crop
+        self.y_crop = y_crop
         self.center_crop = center_crop
 
     

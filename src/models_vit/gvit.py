@@ -107,14 +107,14 @@ class InpaitingGViT(InpaitingViT):
 
 if __name__ == '__main__':
     device = "cuda"
-
+    # IDM NVIEWS MLP_DIM
     model = InpaitingGViT(
-        context_size = 64*13,
-        predictor_size= 32*13,
+        context_size = 64,
+        predictor_size= 32,
         dim = 768,
         depth = 6,
         heads = 12,
-        mlp_dim = 2048*13,
+        mlp_dim = 2048,
         channels = 1,
         dim_head=32,
         dropout = 0.1,

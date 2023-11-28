@@ -1,0 +1,1 @@
+python train.py --model conv --my-decoder --epochs 1000 --train-repeats 1 --test-repeats 1 --batch-size 32 --n-crops 4 --save /scratch/train_conv_mydecoder --project-name train_conv_mydecoder --lr-scheduler custom_exp

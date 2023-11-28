@@ -17,9 +17,9 @@ class NewBlockUp(nn.Module):
     def forward(self, x):
         return self.f(x)
     
-
+# IDM NVIEWS
 class ModelConvUnet(nn.Module):
-    def __init__(self, nFilters = 32, nBottleneck = 512,context_size = 64*13, predictor_size = 32*13):
+    def __init__(self, nFilters = 32, nBottleneck = 512,context_size = 64, predictor_size = 32):
         super().__init__()
         print('Using model Conv Unet')
 
@@ -101,10 +101,10 @@ class ModelConvUnet(nn.Module):
 
 
 
-
+# IDM NVIEWS
 if __name__ == "__main__":
     x = torch.rand((8,1,64,64)).to("cuda")
-    model = ModelConvUnet(32,512, context_size=64*13, predictor_size=32*13).to("cuda")
+    model = ModelConvUnet(32,512, context_size=64, predictor_size=32).to("cuda")
 
     crop, rec, features = model(x)
     print(f'crop: {crop.shape}')

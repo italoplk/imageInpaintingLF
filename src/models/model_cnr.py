@@ -6,7 +6,8 @@ class CroppingLayer(nn.Module):
   '''
     Simple network with one Cropping layer
   '''
-  def __init__(self, context_size = 64*13, predictor_size = 32*13):
+  # IDM NVIEWS
+  def __init__(self, context_size = 64, predictor_size = 32):
     super().__init__()
     self.crop = nn.ZeroPad2d(padding=(
                             -(context_size-predictor_size), # crop left
@@ -47,8 +48,9 @@ class BlockUp(nn.Module):
     def forward(self, x):
         return self.f(x)
 
+# IDM nviews
 class ModelCNR(nn.Module):
-    def __init__(self, nFilters = 32, nBottleneck = 512,context_size = 64*13, predictor_size = 32*13):
+    def __init__(self, nFilters = 32, nBottleneck = 512,context_size = 64, predictor_size = 32):
         super().__init__()
         print('Using model CNR')
 
@@ -83,7 +85,8 @@ class ModelCNR(nn.Module):
 
 if __name__ == "__main__":
     x = torch.rand((8,1,64,64)).to("cuda")
-    model = ModelCNR(32,512, context_size=64*13, predictor_size=32*13).to("cuda")
+    # IDM nviews
+    model = ModelCNR(32,512, context_size=64, predictor_size=32).to("cuda")
 
     crop, rec, features = model(x)
     print(f'crop: {crop.shape}')
